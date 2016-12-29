@@ -1,0 +1,10 @@
+enum Directions {
+	NORTH = 90,
+	NORTHWEST = 135,
+	WEST = 180,
+	SOUTHWEST = 225,
+	SOUTH = 270,
+	SOUTHEAST = 315,
+	EAST = 0,
+	NORTHEAST = 45
+};
