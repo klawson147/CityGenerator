@@ -7,7 +7,6 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	Street* getStreet(sf::Vector2f, )
 
 private:
 
