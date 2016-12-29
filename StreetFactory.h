@@ -7,8 +7,7 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-//Comment here
-//Kelby's Comment
+
 private:
 
 
