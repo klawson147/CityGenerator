@@ -13,6 +13,9 @@ public:
 	void setPointB(int, int);
 	void setPointC(int, int);
 
+	int density;
+	float distFromOrigin;
+
 	sf::Vertex getPointA();
 	sf::Vertex getPointB();
 
