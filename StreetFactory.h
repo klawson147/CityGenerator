@@ -7,7 +7,7 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	int x = 0;
+	int x = 5;
 
 private:
 
