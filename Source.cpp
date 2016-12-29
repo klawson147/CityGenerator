@@ -75,7 +75,7 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 
 	sf::VertexArray va;
 	sf::Vertex v;
-	v.color = sf::Color::White;
+	v.color = sf::Color::Blue;
 	va.setPrimitiveType(sf::Lines);
 
 	for (auto i = st.begin(); i != st.end(); i++)
@@ -83,6 +83,7 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 		va.append(i->getPointA());
 		va.append(i->getPointB());
 		rw.draw(va);
+
 		for (auto t = st.begin(); t != st.end(); t++)
 		{
 			if (t != i)
@@ -106,7 +107,7 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 			
 		}
 
-		
+
 	}
 }
 

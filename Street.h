@@ -7,6 +7,8 @@ public:
 	Street();
 	~Street();
 
+
+	void setAngleDirection(int);
 	void setPointA(int, int);
 	void setPointB(int, int);
 	void setPointC(int, int);
@@ -18,6 +20,8 @@ private:
 	Point pointA;
 	Point pointB;
 	Point pointC;
+
+	int angleDir;
 
 };
 
