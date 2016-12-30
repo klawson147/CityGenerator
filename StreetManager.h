@@ -7,8 +7,14 @@ public:
 	StreetManager();
 	~StreetManager();
 
-	std::vector<Street> streetContainer;
+	
 
 
+private:
+	void setStartingPoint(sf::Vector2i);
+	void timeStep();
+
+
+	std::vector<Street> streets;
 };
 
