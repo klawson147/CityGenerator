@@ -46,6 +46,14 @@ sf::Vertex Street::getVertexB()
 	return v;
 }
 
+sf::Vertex Street::getVertexC()
+{
+	sf::Vertex v;
+	v.position.x = pointC.get_X();
+	v.position.y = pointC.get_Y();
+	return v;
+}
+
 Point Street::getPointA()
 {
 	return pointA;

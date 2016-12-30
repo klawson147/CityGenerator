@@ -16,6 +16,7 @@ public:
 
 	sf::Vertex getVertexA();
 	sf::Vertex getVertexB();
+	sf::Vertex getVertexC();
 
 	Point getPointA();
 	Point getPointB();

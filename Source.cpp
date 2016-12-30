@@ -5,6 +5,7 @@
 #include "StreetFactory.h"
 #include <vector>
 #include <iostream>
+#include "Point.h"
 
 #define NUMBSTREETS
 bool get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
@@ -23,7 +24,11 @@ int main()
 	std::vector<Street> FinishedStreets;
 
 	StreetFactory streetFactory;
-
+	Point p;
+	p.set_X(50);
+	p.set_Y(50);
+	InitialStreet = streetFactory.getLineEndpoint(p, 22, 25);
+	FinishedStreets.push_back(InitialStreet);
 
 	while (window.isOpen())
 	{
@@ -65,18 +70,19 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
 		va.append(i->getVertexA());
-		va.append(i->getVertexB());
+		va.append(i->getVertexC());
 		rw.draw(va);
 
+		/*
 		for (auto t = st.begin(); t != st.end(); t++)
 		{
 			if (t != i)
 			{
 				if (get_line_intersection(
 					i->getVertexA().position.x, i->getVertexA().position.y,
-					i->getVertexB().position.x, i->getVertexB().position.y,
+					i->getVertexC().position.x, i->getVertexC().position.y,
 					t->getVertexA().position.x, t->getVertexA().position.y,
-					t->getVertexB().position.x, t->getVertexB().position.y,
+					t->getVertexC().position.x, t->getVertexC().position.y,
 					xinter, yinter))
 				{
 					intersectionShape.setPosition(*xinter - 5, *yinter - 5);
@@ -89,7 +95,7 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 				}
 			}
 			
-		}
+		}*/
 
 
 	}

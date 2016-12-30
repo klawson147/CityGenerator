@@ -78,7 +78,7 @@ Street getLineEndpoint(Point pLine, int distance, int angle)
 
 	return newStreet;
 }
-
+/*
 Street getLineEndpoint(int x, int y, int distance, int angle)
 {
 	int newx, newy; //X coord and Y coord for new end point
@@ -96,4 +96,4 @@ Street getLineEndpoint(int x, int y, int distance, int angle)
 	newStreet.setDistance(distance); //Setting distance of street
 
 	return newStreet;
-}
+}*/
