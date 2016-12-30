@@ -60,3 +60,8 @@ void Street::setDistance(float dis) // setDistance function to assign distance v
 {
 	distance = dis;
 }
+
+void Street::setAngleDirection(int d)
+{
+	angleDir = d;
+}
