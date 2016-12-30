@@ -55,3 +55,8 @@ Point Street::getPointB()
 {
 	return pointB;
 }
+
+void Street::setDistance(float dis) // setDistance function to assign distance var
+{
+	distance = dis;
+}
