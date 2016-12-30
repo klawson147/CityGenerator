@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include "StreetFactory.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include "Street.h"
-#include "StreetFactory.h"
 #include <vector>
 #include <iostream>
 #include "Point.h"
@@ -24,10 +24,8 @@ int main()
 	std::vector<Street> FinishedStreets;
 
 	StreetFactory streetFactory;
-	Point p;
-	p.set_X(50);
-	p.set_Y(50);
-	InitialStreet = streetFactory.getLineEndpoint(p, 22, 25);
+
+	InitialStreet = streetFactory.getLineEndpoint(50, 50, 22, 25);
 	FinishedStreets.push_back(InitialStreet);
 
 	while (window.isOpen())
