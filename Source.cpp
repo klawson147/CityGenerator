@@ -80,8 +80,8 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
-		va.append(i->getPointA());
-		va.append(i->getPointB());
+		va.append(i->getVertexA());
+		va.append(i->getVertexB());
 		rw.draw(va);
 
 		for (auto t = st.begin(); t != st.end(); t++)
@@ -89,10 +89,10 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 			if (t != i)
 			{
 				if (get_line_intersection(
-					i->getPointA().position.x, i->getPointA().position.y, 
-					i->getPointB().position.x, i->getPointB().position.y, 
-					t->getPointA().position.x, t->getPointA().position.y, 
-					t->getPointB().position.x, t->getPointB().position.y, 
+					i->getVertexA().position.x, i->getVertexA().position.y,
+					i->getVertexB().position.x, i->getVertexB().position.y,
+					t->getVertexA().position.x, t->getVertexA().position.y,
+					t->getVertexB().position.x, t->getVertexB().position.y,
 					xinter, yinter))
 				{
 					intersectionShape.setPosition(*xinter - 5, *yinter - 5);

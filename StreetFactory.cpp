@@ -45,6 +45,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 {
 	Point p1 = s1.getPointA();
 	Point p2 = s1.getPointB();
+	Point p3;
 
 	float slope = calculateSlope(p1, p2);
 
@@ -55,6 +56,8 @@ Point StreetFactory::getPointOnLine(Street s1)
 	slope *= xVec;
 	slope -= p1.get_Y();
 
+
+	return p3;
 }
 
 Street getPerpLine(Point pLine, int distance, int angle)
