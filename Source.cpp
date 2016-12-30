@@ -25,7 +25,7 @@ int main()
 
 	StreetFactory streetFactory;
 
-	InitialStreet = streetFactory.getLineEndpoint(50, 50, 22, 25);
+	InitialStreet = streetFactory.getLineEndpoint(50, 50, 30, 25);
 	FinishedStreets.push_back(InitialStreet);
 
 	while (window.isOpen())
@@ -67,8 +67,9 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
-		va.append(i->getVertexA());
-		va.append(i->getVertexC());
+	
+		va.append(st.begin()->getVertexA());
+		va.append(st.begin()->getVertexC());
 		rw.draw(va);
 
 		/*

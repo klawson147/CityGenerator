@@ -91,6 +91,7 @@ Street StreetFactory::getLineEndpoint(int x, int y, int distance, int angle)
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
 
+	newStreet.setPointA(x, y);
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
