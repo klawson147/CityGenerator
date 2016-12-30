@@ -30,7 +30,7 @@ void Street::setPointC(int x, int y)
 }
 
 
-sf::Vertex Street::getPointA()
+sf::Vertex Street::getVertexA()
 {
 	sf::Vertex v;
 	v.position.x = pointA.get_X();
@@ -38,10 +38,20 @@ sf::Vertex Street::getPointA()
 	return v;
 }
 
-sf::Vertex Street::getPointB()
+sf::Vertex Street::getVertexB()
 {
 	sf::Vertex v;
 	v.position.x = pointB.get_X();
 	v.position.y = pointB.get_Y();
 	return v;
+}
+
+Point Street::getPointA()
+{
+	return pointA;
+}
+
+Point Street::getPointB()
+{
+	return pointB;
 }

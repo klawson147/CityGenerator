@@ -16,8 +16,11 @@ public:
 	int density;
 	float distFromOrigin;
 
-	sf::Vertex getPointA();
-	sf::Vertex getPointB();
+	sf::Vertex getVertexA();
+	sf::Vertex getVertexB();
+
+	Point getPointA();
+	Point getPointB();
 
 private:
 	Point pointA;
