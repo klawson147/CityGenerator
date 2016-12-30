@@ -2,6 +2,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include "Street.h"
+#include "StreetFactory.h"
 #include <vector>
 #include <iostream>
 
@@ -21,18 +22,8 @@ int main()
 	std::vector<Street> GrowingStreets;
 	std::vector<Street> FinishedStreets;
 
-	InitialStreet.setPointA(rand() % 850 + 1, rand() % 850 + 1);
-	InitialStreet.setPointB(rand() % 850 + 1, rand() % 850 + 1);
+	StreetFactory streetFactory;
 
-	FinishedStreets.push_back(InitialStreet);
-
-	InitialStreet.setPointA(rand() % 850 + 1, rand() % 850 + 1);
-	InitialStreet.setPointB(rand() % 850 + 1, rand() % 850 + 1);
-	FinishedStreets.push_back(InitialStreet);
-
-	InitialStreet.setPointA(rand() % 850 + 1, rand() % 850 + 1);
-	InitialStreet.setPointB(rand() % 850 + 1, rand() % 850 + 1);
-	FinishedStreets.push_back(InitialStreet);
 
 	while (window.isOpen())
 	{
@@ -45,14 +36,7 @@ int main()
 			{
 				if (event.key.code == sf::Keyboard::R)
 				{
-					FinishedStreets[0].setPointA(rand() % 850 + 1, rand() % 850 + 1);
-					FinishedStreets[0].setPointB(rand() % 850 + 1, rand() % 850 + 1);
-
-					FinishedStreets[1].setPointA(rand() % 850 + 1, rand() % 850 + 1);
-					FinishedStreets[1].setPointB(rand() % 850 + 1, rand() % 850 + 1);
-
-					FinishedStreets[2].setPointA(rand() % 850 + 1, rand() % 850 + 1);
-					FinishedStreets[2].setPointB(rand() % 850 + 1, rand() % 850 + 1);
+					
 				}
 			}
 		}

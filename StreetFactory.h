@@ -13,7 +13,8 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	Street getPerpLine(Point,int, int);
+	Street getLineEndpoint(Point, int, int);
+	Street getLineEndpoint(int, int, int, int);
 
 private:
 
