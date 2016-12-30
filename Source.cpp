@@ -20,14 +20,17 @@ int main()
 	window.setFramerateLimit(60);
 
 	Street InitialStreet;
+	Street s2;
 	std::vector<Street> GrowingStreets;
 	std::vector<Street> FinishedStreets;
 
 	StreetFactory streetFactory;
 
-	InitialStreet = streetFactory.getLineEndpoint(50, 50, 30, 25);
-	FinishedStreets.push_back(InitialStreet);
+	InitialStreet = streetFactory.getLineEndpoint(50, 50, 300, 90);
+	s2 = streetFactory.getLineEndpoint(200, 450, 300, -120);
 
+	FinishedStreets.push_back(InitialStreet);
+	FinishedStreets.push_back(s2);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -68,11 +71,11 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
 	
-		va.append(st.begin()->getVertexA());
-		va.append(st.begin()->getVertexC());
+		va.append(i->getVertexA());
+		va.append(i->getVertexC());
 		rw.draw(va);
 
-		/*
+		
 		for (auto t = st.begin(); t != st.end(); t++)
 		{
 			if (t != i)
@@ -94,7 +97,7 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 				}
 			}
 			
-		}*/
+		}
 
 
 	}
