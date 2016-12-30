@@ -1,4 +1,5 @@
 #include "SFML\Graphics.hpp"
+#include <math.h>
 #pragma once
 class Point
 {

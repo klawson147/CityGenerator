@@ -45,3 +45,8 @@ sf::Vertex Street::getPointB()
 	v.position.y = pointB.get_Y();
 	return v;
 }
+
+void Street::setDistance(float dis) // setDistance function to assign distance var
+{
+	distance = dis;
+}
