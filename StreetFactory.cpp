@@ -60,7 +60,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 	return p3;
 }
 
-Street getPerpLine(Point pLine, int distance, int angle)
+Street getLineEndpoint(Point pLine, int distance, int angle)
 {
 	int newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
