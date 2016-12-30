@@ -13,8 +13,8 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	Street getLineEndpoint(Point, int, int);
-	Street getLineEndpoint(int, int, int, int);
+	Street createStreetFromPoint(Point, int, int);
+	Street createStreetFromPoint(int, int, int, int);
 
 private:
 

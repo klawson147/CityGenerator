@@ -60,7 +60,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 	return p3;
 }
 
-Street StreetFactory::getLineEndpoint(Point pLine, int distance, int angle)
+Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle)
 {
 	int newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
@@ -72,6 +72,7 @@ Street StreetFactory::getLineEndpoint(Point pLine, int distance, int angle)
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
 	
+	newStreet.setPointA(pLine.get_X(), pLine.get_Y());
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
@@ -79,7 +80,7 @@ Street StreetFactory::getLineEndpoint(Point pLine, int distance, int angle)
 	return newStreet;
 }
 
-Street StreetFactory::getLineEndpoint(int x, int y, int distance, int angle)
+Street StreetFactory::createStreetFromPoint(int x, int y, int distance, int angle)
 {
 	int newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
