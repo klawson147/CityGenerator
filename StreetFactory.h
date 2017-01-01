@@ -1,5 +1,6 @@
 #include <math.h>
 #include <time.h>
+#include <random>
 #include "Street.h"
 #include "Directions.h"
 #include "Point.h"
@@ -18,9 +19,13 @@ public:
 
 	float calculateSlope(Point, Point);
 	int getPossibleXValue(Street);
-private:
+
 
 	Point getPointOnLine(Street);
+	Point getPointOnLine(Street, int);
+private:
+
+	
 	
 	
 };

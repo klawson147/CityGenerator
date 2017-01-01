@@ -3,8 +3,6 @@
 
 StreetFactory::StreetFactory()
 {
-	srand(time(NULL));
-
 }
 
 
@@ -29,21 +27,19 @@ float StreetFactory::calculateSlope(Point p1, Point p2)
 // Return a Random X Value in the Range of a Street
 int StreetFactory::getPossibleXValue(Street s1)
 {
-
-
-	int xValue;
+	std::random_device rd;
+	std::mt19937 rng(rd());
 
 	if (s1.getPointA().get_X() > s1.getPointB().get_X())
 	{
-		xValue = (rand() % (s1.getPointA().get_X() - s1.getPointB().get_X()) + s1.getPointB().get_X());
+		std::uniform_int_distribution<int> uni(s1.getPointB().get_X(), s1.getPointA().get_X());
+		return uni(rng);;
 	}
 	else
 	{
-		xValue = (rand() % (s1.getPointB().get_X() - s1.getPointA().get_X()) + s1.getPointA().get_X());
+		std::uniform_int_distribution<int> uni(s1.getPointA().get_X(), s1.getPointB().get_X());
+		return uni(rng);;
 	}
-
-	return xValue;
-
 }
 
 // Return a Random Point on the Street s1
@@ -56,15 +52,37 @@ Point StreetFactory::getPointOnLine(Street s1)
 	float slope = calculateSlope(p1, p2);
 
 	int newX = getPossibleXValue(s1);
-
+	
 	float xVec = p1.get_X() - newX;
 
 	slope *= xVec;
 	slope -= p1.get_Y();
-
+	slope *= -1; //4th Quadant Environment
+	p3.set_X(newX);
+	p3.set_Y(slope);
 
 	return p3;
 }
+// Return a Point on the Street s1 at position x
+// no error checking
+Point StreetFactory::getPointOnLine(Street s1, int newX)
+{
+	Point p1 = s1.getPointA();
+	Point p2 = s1.getPointB();
+	Point p3;
+
+	float slope = calculateSlope(p1, p2);
+	float xVec = p1.get_X() - newX;
+
+	slope *= xVec;
+	slope -= p1.get_Y();
+	slope *= -1; //4th Quadant Environment
+	p3.set_X(newX);
+	p3.set_Y(slope);
+
+	return p3;
+}
+
 
 Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle)
 {

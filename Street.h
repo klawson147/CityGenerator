@@ -7,7 +7,6 @@ public:
 	Street();
 	~Street();
 
-
 	void setAngleDirection(int);
 	void setPointA(int, int);
 	void setPointB(int, int);

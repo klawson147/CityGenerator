@@ -13,11 +13,12 @@ bool get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
 void renderer(sf::RenderWindow& rw, std::vector<Street>& st);
 int main()
 {
-
 	srand(time(NULL));
+	sf::ContextSettings cs;
+	cs.antialiasingLevel = 8;
 
-	sf::RenderWindow window(sf::VideoMode(850, 850), "SFML works!");
-	window.setFramerateLimit(60);
+	sf::RenderWindow window(sf::VideoMode(850, 850), "SFML works!", sf::Style::Default, cs);
+	window.setFramerateLimit(5);
 
 	Street InitialStreet;
 	Street s2;
@@ -26,29 +27,42 @@ int main()
 
 	StreetFactory streetFactory;
 
-	InitialStreet = streetFactory.getLineEndpoint(50, 50, 300, 90);
-	s2 = streetFactory.getLineEndpoint(200, 450, 300, -120);
+	//FinishedStreets.push_back(streetFactory.createStreetFromPoint(50, 50, 300, 90));
+	//FinishedStreets.push_back(streetFactory.createStreetFromPoint(200, 450, 300, -120));
 
-	FinishedStreets.push_back(InitialStreet);
-	FinishedStreets.push_back(s2);
+	Street s1;
+	s1.setPointA(22, 150);
+	s1.setPointB(700, 700);
+	s1.setPointC(700, 700);
+
+	FinishedStreets.push_back(s1);
+	s1.setPointA(50, 500);
+	s1.setPointB(500, 50);
+	s1.setPointC(500, 50);
+	
+	FinishedStreets.push_back(s1);
+
+	sf::Clock clock;
+	float lastTime = 0;
+
 	while (window.isOpen())
 	{
+		float currentTime = clock.restart().asSeconds();
+		float fps = 1.f / (currentTime - lastTime);
+		lastTime = currentTime;
+		std::cout << lastTime << std::endl;
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyPressed)
-			{
-				if (event.key.code == sf::Keyboard::R)
-				{
-					
-				}
-			}
 		}
 	
 		window.clear();
+
 		renderer(window, FinishedStreets);
+
 		window.display();
 	}
 
@@ -65,8 +79,13 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 
 	sf::VertexArray va;
 	sf::Vertex v;
+
 	v.color = sf::Color::Blue;
 	va.setPrimitiveType(sf::Lines);
+	
+	StreetFactory streetFactory;
+
+	
 
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
@@ -75,6 +94,16 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 		va.append(i->getVertexC());
 		rw.draw(va);
 
+		Point t;
+		for (int q = 0; q < 20; q++)
+		{
+
+			t = streetFactory.getPointOnLine(*i);
+			intersectionShape.setFillColor(sf::Color::Red);
+			//std::cout << "X: " << t.get_X() << " Y: " << t.get_Y() << std::endl;
+			intersectionShape.setPosition(t.get_X() - 5, t.get_Y() - 5);
+			rw.draw(intersectionShape);
+		}
 		
 		for (auto t = st.begin(); t != st.end(); t++)
 		{
@@ -87,13 +116,14 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 					t->getVertexC().position.x, t->getVertexC().position.y,
 					xinter, yinter))
 				{
+					intersectionShape.setFillColor(sf::Color::Blue);
 					intersectionShape.setPosition(*xinter - 5, *yinter - 5);
 					rw.draw(intersectionShape);
-					std::cout << "Intersection\n";
+					
 				}
 				else
 				{
-					std::cout << "Not\n";
+					
 				}
 			}
 			
