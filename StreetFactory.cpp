@@ -3,6 +3,8 @@
 
 StreetFactory::StreetFactory()
 {
+	srand(time(NULL));
+
 }
 
 
@@ -15,25 +17,29 @@ StreetFactory::~StreetFactory()
 // Return The Slope from 2 Points
 float StreetFactory::calculateSlope(Point p1, Point p2)
 {
-	float m = p1.get_Y() - p2.get_Y();
-	m /= (p1.get_X() - p2.get_X());
+	float m;
+	float deltaY = p2.get_Y() - p1.get_Y();
+	float deltaX = p2.get_X() - p1.get_X();
+
+	m = deltaY / deltaX;
+	
 	return m;
 }
 
 // Return a Random X Value in the Range of a Street
 int StreetFactory::getPossibleXValue(Street s1)
 {
-	srand(time(NULL));
+
 
 	int xValue;
 
 	if (s1.getPointA().get_X() > s1.getPointB().get_X())
 	{
-		xValue = rand() % s1.getPointA().get_X() + s1.getPointB().get_X();
+		xValue = (rand() % (s1.getPointA().get_X() - s1.getPointB().get_X()) + s1.getPointB().get_X());
 	}
 	else
 	{
-		xValue = rand() % s1.getPointB().get_X() + s1.getPointA().get_X();
+		xValue = (rand() % (s1.getPointB().get_X() - s1.getPointA().get_X()) + s1.getPointA().get_X());
 	}
 
 	return xValue;

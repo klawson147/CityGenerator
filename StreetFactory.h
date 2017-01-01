@@ -16,10 +16,12 @@ public:
 	Street createStreetFromPoint(Point, int, int);
 	Street createStreetFromPoint(int, int, int, int);
 
+	float calculateSlope(Point, Point);
+	int getPossibleXValue(Street);
 private:
 
 	Point getPointOnLine(Street);
-	float calculateSlope(Point, Point);
-	int getPossibleXValue(Street);
+	
+	
 };
 
