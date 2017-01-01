@@ -13,6 +13,7 @@ bool get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
 void renderer(sf::RenderWindow& rw, std::vector<Street>& st);
 int main()
 {
+
 	srand(time(NULL));
 	sf::ContextSettings cs;
 	cs.antialiasingLevel = 8;
@@ -31,16 +32,21 @@ int main()
 	//FinishedStreets.push_back(streetFactory.createStreetFromPoint(200, 450, 300, -120));
 
 	Street s1;
-	s1.setPointA(22, 150);
-	s1.setPointB(700, 700);
-	s1.setPointC(700, 700);
 
-	FinishedStreets.push_back(s1);
-	s1.setPointA(50, 500);
-	s1.setPointB(500, 50);
-	s1.setPointC(500, 50);
-	
-	FinishedStreets.push_back(s1);
+	for (int i = 0; i < 20; i++)
+	{
+		int x = rand() % window.getSize().x;
+		int y = rand() % window.getSize().y;
+		s1.setPointA(x, y);
+
+		x = rand() % window.getSize().x;
+		y = rand() % window.getSize().y;
+
+		s1.setPointB(x, y);
+		s1.setPointC(x, y);
+		FinishedStreets.push_back(s1);
+	}
+
 
 	sf::Clock clock;
 	float lastTime = 0;
@@ -57,6 +63,29 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			if (event.type = sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::R)
+				{
+					FinishedStreets.clear();
+
+					for (int i = 0; i < 20; i++)
+					{
+						int x = rand() % window.getSize().x;
+						int y = rand() % window.getSize().y;
+						s1.setPointA(x, y);
+
+						x = rand() % window.getSize().x;
+						y = rand() % window.getSize().y;
+
+						s1.setPointB(x, y);
+						s1.setPointC(x, y);
+						FinishedStreets.push_back(s1);
+					}
+				}
+			}
+
 		}
 	
 		window.clear();
@@ -86,16 +115,19 @@ void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
 	StreetFactory streetFactory;
 
 	
-
 	for (auto i = st.begin(); i != st.end(); i++)
 	{
-	
+
 		va.append(i->getVertexA());
 		va.append(i->getVertexC());
 		rw.draw(va);
+	}
+	Point t;
 
-		Point t;
-		for (int q = 0; q < 20; q++)
+	for (auto i = st.begin(); i != st.end(); i++)
+	{
+		
+		for (int q = 0; q < 2; q++)
 		{
 
 			t = streetFactory.getPointOnLine(*i);
