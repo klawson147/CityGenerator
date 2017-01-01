@@ -6,6 +6,7 @@ class Point
 public:
 	Point();
 	Point(sf::Vector2i);
+	Point(int, int);
 	~Point();
 
 	int get_X();
