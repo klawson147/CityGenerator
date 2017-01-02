@@ -1,5 +1,6 @@
 #include <math.h>
 #include <time.h>
+#include <random>
 #include "Street.h"
 #include "Directions.h"
 #include "Point.h"
@@ -13,13 +14,19 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	Street getLineEndpoint(Point, int, int);
-	Street getLineEndpoint(int, int, int, int);
+	Street createStreetFromPoint(Point, int, int);
+	Street createStreetFromPoint(int, int, int, int);
 
-private:
-
-	Point getPointOnLine(Street);
 	float calculateSlope(Point, Point);
 	int getPossibleXValue(Street);
+
+
+	Point getPointOnLine(Street);
+	Point getPointOnLine(Street, int);
+private:
+
+	
+	
+	
 };
 

@@ -11,6 +11,12 @@ Point::Point(sf::Vector2i pos)
 	position = pos;
 }
 
+Point::Point(int x, int y)
+{
+	position.x = x;
+	position.y = y;
+}
+
 Point::~Point()
 {
 }
