@@ -82,6 +82,8 @@ Point StreetFactory::getPointOnLine(Street s1, int newX)
 
 Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle)
 {
+	angle *= -1; // 4th Quadrant Environment
+
 	int newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
 	Street newStreet; //Street to be returned
@@ -89,6 +91,8 @@ Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle
 	newx = (pLine.get_X()) + (distance * cos(angle * PI / 180.0)); //Calculating new x coord
 	newy = (pLine.get_Y()) + (distance * sin(angle * PI / 180.0)); //Calculating new y coord
 	
+
+
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
 	
@@ -96,7 +100,7 @@ Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle
 	newStreet.setPointB(pLine.get_X(), pLine.get_Y());
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
 
-
+	newStreet.setSlope(calculateSlope(newStreet.getPointA(), newStreet.getPointC()));
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
 
@@ -105,19 +109,25 @@ Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle
 
 Street StreetFactory::createStreetFromPoint(int x, int y, int distance, int angle)
 {
+	angle *= -1; // 4th Quadrant Environment
+
 	int newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
 	Street newStreet; //Street to be returned
 
 	newx = (x) + (distance * cos(angle * PI / 180.0)); //Calculating new x coord
 	newy = (y) + (distance * sin(angle * PI / 180.0)); //Calculating new y coord
+	
 
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
 
+	
+
 	newStreet.setPointA(x, y);
 	newStreet.setPointB(x, y);
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
+
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
 

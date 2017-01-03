@@ -42,6 +42,8 @@ int main()
 		// Update Simulation
 		while (clock.getElapsedTime().asMilliseconds() > next_game_tick && loops < MAX_FPS)
 		{
+			streetManager.timeStep();
+
 			sf::Event event;
 			while (window.pollEvent(event))
 			{

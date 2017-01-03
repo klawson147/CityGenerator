@@ -19,11 +19,10 @@ void StreetManager::drawStreets()
 	for (auto i = finishedStreets_.begin(); i != finishedStreets_.end(); i++)
 	{
 		va.append(i->getVertexA());
-		va.append(i->getVertexC());
+		va.append(i->getVertexB());
 		rw_->draw(va);
 		va.clear();
 	}
-
 
 	for (auto i = growingStreets_.begin(); i != growingStreets_.end(); i++)
 	{
@@ -83,10 +82,12 @@ void StreetManager::setInitialStreet()
 	finishedStreets_.clear();
 	growingStreets_.clear();
 
-	finishedStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 200, 0));
-	//finishedStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 75, streetFactory.getRandomAngle()));
-	//finishedStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 75, streetFactory.getRandomAngle()));
-
+	for (int i = 0; i < 15; i++)
+	{
+		growingStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 400, streetFactory.getRandomAngle()));
+	}
+	
+	
 
 }
 
@@ -94,9 +95,16 @@ void StreetManager::setInitialStreet()
 
 void StreetManager::timeStep()
 {
-	for (auto i = growingStreets_.begin(); i != growingStreets_.end(); i++)
+	for (int i = 0; i < growingStreets_.size(); i++)
 	{
-		i->grow();
+		if (growingStreets_[i].grow() == false)
+		{
+			finishedStreets_.push_back(growingStreets_.at(i));
+			growingStreets_.erase(growingStreets_.begin() + i);
+			
+		}
+		
+		
 	}
 
 	//growingStreets_.push_back(streetFactory.)

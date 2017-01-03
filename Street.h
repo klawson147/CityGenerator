@@ -7,13 +7,15 @@ public:
 	Street();
 	~Street();
 
-	void setAngleDirection(int);
+
+
 	void setPointA(int, int);
 	void setPointB(int, int);
 	void setPointC(int, int);
-	void setDistance(float); 
 
+	void setDistance(float); 
 	void setSlope(int);
+	void setAngleDirection(int);
 
 	sf::Vertex getVertexA();
 	sf::Vertex getVertexB();
@@ -21,6 +23,7 @@ public:
 
 	Point getPointA();
 	Point getPointB();
+	Point getPointC();
 
 	bool grow();
 
@@ -31,9 +34,6 @@ private:
 
 	int angleDir;
 	
-	float distanceB;
-	float distanceC;
-
 	float distance; //distance of line
 	float distFromOrigin; //Distance from point of line origin
 

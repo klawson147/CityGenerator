@@ -64,6 +64,11 @@ Point Street::getPointB()
 	return pointB;
 }
 
+Point Street::getPointC()
+{
+	return pointC;
+}
+
 void Street::setDistance(float dis) // setDistance function to assign distance var
 {
 	distance = dis;
@@ -78,9 +83,41 @@ void Street::setAngleDirection(int d)
 // Returns false if street done growing
 bool Street::grow()
 {
+	int xb = pointB.get_X();
+	int yb = pointB.get_Y();
+	if (pointB.get_X() != pointC.get_X() || pointB.get_Y() != pointC.get_Y())
+	{
+		if (xb > pointC.get_X())
+		{
+			xb--;
+			pointB.set_X(xb);
+		}
 
+		if (xb < pointC.get_X())
+		{
+			xb++;
+			pointB.set_X(xb);
+		}
 
-	return true;
+		if (yb > pointC.get_Y())
+		{
+			yb--;
+			pointB.set_Y(yb);
+
+		}
+
+		if (yb < pointC.get_Y())
+		{
+			yb++;
+			pointB.set_Y(yb);
+
+		}
+
+		return true;
+	}
+
+	return false;
+
 }
 
 void Street::setSlope(int s)
