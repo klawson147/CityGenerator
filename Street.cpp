@@ -73,3 +73,17 @@ void Street::setAngleDirection(int d)
 {
 	angleDir = d;
 }
+
+// Returns true if street still growing
+// Returns false if street done growing
+bool Street::grow()
+{
+
+
+	return true;
+}
+
+void Street::setSlope(int s)
+{
+	slope_ = s;
+}

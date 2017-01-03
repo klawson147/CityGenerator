@@ -3,6 +3,7 @@
 
 StreetFactory::StreetFactory()
 {
+
 }
 
 
@@ -16,8 +17,8 @@ StreetFactory::~StreetFactory()
 float StreetFactory::calculateSlope(Point p1, Point p2)
 {
 	float m;
-	float deltaY = p2.get_Y() - p1.get_Y();
-	float deltaX = p2.get_X() - p1.get_X();
+	float deltaY = (float)p2.get_Y() - (float)p1.get_Y();
+	float deltaX = (float)p2.get_X() - (float)p1.get_X();
 
 	m = deltaY / deltaX;
 	
@@ -27,18 +28,13 @@ float StreetFactory::calculateSlope(Point p1, Point p2)
 // Return a Random X Value in the Range of a Street
 int StreetFactory::getPossibleXValue(Street s1)
 {
-	std::random_device rd;
-	std::mt19937 rng(rd());
-
 	if (s1.getPointA().get_X() > s1.getPointB().get_X())
 	{
-		std::uniform_int_distribution<int> uni(s1.getPointB().get_X(), s1.getPointA().get_X());
-		return uni(rng);;
+		return getUniformRandomInRange(s1.getPointB().get_X(), s1.getPointA().get_X());
 	}
 	else
 	{
-		std::uniform_int_distribution<int> uni(s1.getPointA().get_X(), s1.getPointB().get_X());
-		return uni(rng);;
+		return getUniformRandomInRange(s1.getPointA().get_X(), s1.getPointB().get_X());
 	}
 }
 
@@ -57,7 +53,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 
 	slope *= xVec;
 	slope -= p1.get_Y();
-	slope *= -1; //4th Quadant Environment
+	slope *= -1; //4th Quadrant Environment
 	p3.set_X(newX);
 	p3.set_Y(slope);
 
@@ -97,7 +93,10 @@ Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle
 	newPoint.set_Y(newy); //Setting new end point y coord
 	
 	newStreet.setPointA(pLine.get_X(), pLine.get_Y());
+	newStreet.setPointB(pLine.get_X(), pLine.get_Y());
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
+
+
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
 
@@ -117,9 +116,95 @@ Street StreetFactory::createStreetFromPoint(int x, int y, int distance, int angl
 	newPoint.set_Y(newy); //Setting new end point y coord
 
 	newStreet.setPointA(x, y);
+	newStreet.setPointB(x, y);
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
 	newStreet.setAngleDirection(angle); //Setting angle of street
 	newStreet.setDistance(distance); //Setting distance of street
 
 	return newStreet;
+}
+
+
+int StreetFactory::getRandomAngle()
+{	
+	return getUniformRandomInRange(0, 359);
+}
+
+Street StreetFactory::createRandomStreet(sf::Vector2i lb, sf::Vector2i up)
+{
+	Street newStreet;
+	
+	int x1 = rand() % (up.x - lb.x) + (lb.x);
+	int y1 = rand() % (up.y - lb.y) + (lb.y);
+
+	int x2 = rand() % (up.x - lb.x) + (lb.x);
+	int y2 = rand() % (up.y - lb.y) + (lb.y);
+
+	newStreet.setPointA(x1, y1);
+	newStreet.setPointB(x2, y2);
+	newStreet.setPointC(x2, y2);
+
+	return newStreet;
+}
+
+// Get a random perpendicular angle
+int StreetFactory::getPerpendicularAngle(int angle)
+{
+	int result = getUniformRandomInRange(0, 1);
+
+	if (result == 1)
+	{
+		angle += 90;
+
+		if (angle > 359)
+		{
+			angle -= 359;
+			return angle;
+		}
+	}
+	else
+	{
+		angle -= 90;
+
+		if (angle < 0)
+		{
+			angle = 360 + angle;
+			return angle;
+		}
+	}
+	return angle;
+}
+
+// Get a perpendicular angle
+//  1  positive
+// -1  negative
+int StreetFactory::getPerpendicularAngle(int angle, int direction)
+{
+	int perp = (90 * direction);
+
+	angle += perp;
+
+	if (angle > 359)
+	{
+		angle -= 359;
+		return angle;
+	}
+
+	if (angle < 0)
+	{
+		angle = 360 + angle;
+		return angle;
+	}
+	return angle;
+}
+
+// Return a random number in range of lower - upper
+// Uniform Probability
+int StreetFactory::getUniformRandomInRange(int lower, int upper)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(lower, upper);
+
+	return dis(gen);
 }

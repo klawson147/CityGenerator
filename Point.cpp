@@ -45,3 +45,4 @@ void Point::set_Y(int p)
 {
 	position.y = p;
 }
+

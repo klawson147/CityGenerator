@@ -11,7 +11,9 @@ public:
 	void setPointA(int, int);
 	void setPointB(int, int);
 	void setPointC(int, int);
-	void setDistance(float); //setDistance prototype
+	void setDistance(float); 
+
+	void setSlope(int);
 
 	sf::Vertex getVertexA();
 	sf::Vertex getVertexB();
@@ -20,15 +22,22 @@ public:
 	Point getPointA();
 	Point getPointB();
 
+	bool grow();
+
 private:
 	Point pointA;
 	Point pointB;
 	Point pointC;
 
 	int angleDir;
-	int density; //Population density rating of street
+	
+	float distanceB;
+	float distanceC;
+
 	float distance; //distance of line
 	float distFromOrigin; //Distance from point of line origin
+
+	int slope_;
 
 };
 

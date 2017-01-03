@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "StreetFactory.h"
+#include "StreetManager.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include "Street.h"
@@ -7,189 +8,67 @@
 #include <iostream>
 #include "Point.h"
 
-#define NUMBSTREETS
-bool get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
-	float p2_x, float p2_y, float p3_x, float p3_y, float *i_x, float *i_y);
-void renderer(sf::RenderWindow& rw, std::vector<Street>& st);
+#define MAX_FPS 60
+#define SKIP_TICKS = 16.666
+#define MAX_FRAMESKIP 10
+
 int main()
 {
-
 	srand(time(NULL));
+
 	sf::ContextSettings cs;
 	cs.antialiasingLevel = 8;
 
-	sf::RenderWindow window(sf::VideoMode(850, 850), "SFML works!", sf::Style::Default, cs);
-	window.setFramerateLimit(5);
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!", sf::Style::Fullscreen, cs);
+	window.setFramerateLimit(60);
 
-	Street InitialStreet;
-	Street s2;
-	std::vector<Street> GrowingStreets;
-	std::vector<Street> FinishedStreets;
-
-	StreetFactory streetFactory;
-
-	//FinishedStreets.push_back(streetFactory.createStreetFromPoint(50, 50, 300, 90));
-	//FinishedStreets.push_back(streetFactory.createStreetFromPoint(200, 450, 300, -120));
-
-	Street s1;
-
-	for (int i = 0; i < 20; i++)
-	{
-		int x = rand() % window.getSize().x;
-		int y = rand() % window.getSize().y;
-		s1.setPointA(x, y);
-
-		x = rand() % window.getSize().x;
-		y = rand() % window.getSize().y;
-
-		s1.setPointB(x, y);
-		s1.setPointC(x, y);
-		FinishedStreets.push_back(s1);
-	}
-
+	StreetManager streetManager(&window);
+	
+	streetManager.setStartingPoint(sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2));
+	streetManager.setInitialStreet();
+	
 
 	sf::Clock clock;
-	float lastTime = 0;
+	sf::Clock permClock;
+
+	unsigned long next_game_tick = permClock.getElapsedTime().asMilliseconds();
+
+	int loops;
 
 	while (window.isOpen())
 	{
-		float currentTime = clock.restart().asSeconds();
-		float fps = 1.f / (currentTime - lastTime);
-		lastTime = currentTime;
-		std::cout << lastTime << std::endl;
+		loops = 0;
 
-		sf::Event event;
-		while (window.pollEvent(event))
+		// Update Simulation
+		while (clock.getElapsedTime().asMilliseconds() > next_game_tick && loops < MAX_FPS)
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-
-			if (event.type = sf::Event::KeyPressed)
+			sf::Event event;
+			while (window.pollEvent(event))
 			{
-				if (event.key.code == sf::Keyboard::R)
+				if (event.type == sf::Event::Closed)
+					window.close();
+
+				if (event.type = sf::Event::KeyReleased)
 				{
-					FinishedStreets.clear();
-
-					for (int i = 0; i < 20; i++)
+					if (event.key.code == sf::Keyboard::R)
 					{
-						int x = rand() % window.getSize().x;
-						int y = rand() % window.getSize().y;
-						s1.setPointA(x, y);
-
-						x = rand() % window.getSize().x;
-						y = rand() % window.getSize().y;
-
-						s1.setPointB(x, y);
-						s1.setPointC(x, y);
-						FinishedStreets.push_back(s1);
+						streetManager.setInitialStreet();
+					}
+					if (event.key.code == sf::Keyboard::Escape)
+					{
+						window.close();
 					}
 				}
 			}
 
+			next_game_tick += 16.666;
+			loops++;
 		}
-	
+		// Draw Simulation
 		window.clear();
-
-		renderer(window, FinishedStreets);
-
+		streetManager.drawStreets();
 		window.display();
 	}
 
 	return 0;
 }
-
-void renderer(sf::RenderWindow& rw, std::vector<Street>& st)
-{
-	float* xinter = new float(0.0);
-	float* yinter = new float(0.0);
-
-	sf::CircleShape intersectionShape(5);
-	intersectionShape.setFillColor(sf::Color::Red);
-
-	sf::VertexArray va;
-	sf::Vertex v;
-
-	v.color = sf::Color::Blue;
-	va.setPrimitiveType(sf::Lines);
-	
-	StreetFactory streetFactory;
-
-	
-	for (auto i = st.begin(); i != st.end(); i++)
-	{
-
-		va.append(i->getVertexA());
-		va.append(i->getVertexC());
-		rw.draw(va);
-	}
-	Point t;
-
-	for (auto i = st.begin(); i != st.end(); i++)
-	{
-		
-		for (int q = 0; q < 2; q++)
-		{
-
-			t = streetFactory.getPointOnLine(*i);
-			intersectionShape.setFillColor(sf::Color::Red);
-			//std::cout << "X: " << t.get_X() << " Y: " << t.get_Y() << std::endl;
-			intersectionShape.setPosition(t.get_X() - 5, t.get_Y() - 5);
-			rw.draw(intersectionShape);
-		}
-		
-		for (auto t = st.begin(); t != st.end(); t++)
-		{
-			if (t != i)
-			{
-				if (get_line_intersection(
-					i->getVertexA().position.x, i->getVertexA().position.y,
-					i->getVertexC().position.x, i->getVertexC().position.y,
-					t->getVertexA().position.x, t->getVertexA().position.y,
-					t->getVertexC().position.x, t->getVertexC().position.y,
-					xinter, yinter))
-				{
-					intersectionShape.setFillColor(sf::Color::Blue);
-					intersectionShape.setPosition(*xinter - 5, *yinter - 5);
-					rw.draw(intersectionShape);
-					
-				}
-				else
-				{
-					
-				}
-			}
-			
-		}
-
-
-	}
-}
-
-
-
-// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
-// intersect the intersection point may be stored in the floats i_x and i_y.
-bool get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
-	float p2_x, float p2_y, float p3_x, float p3_y, float *i_x, float *i_y)
-{
-	float s1_x, s1_y, s2_x, s2_y;
-	s1_x = p1_x - p0_x;     s1_y = (p1_y - p0_y);
-	s2_x = p3_x - p2_x;     s2_y = (p3_y - p2_y);
-
-	float s, t;
-	s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
-	t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
-
-	if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
-	{
-		// Collision detected
-		if (i_x != NULL)
-			*i_x = p0_x + (t * s1_x);
-		if (i_y != NULL)
-			*i_y = p0_y + (t * s1_y);
-		return true;
-	}
-
-	return false; // No collision
-}
-

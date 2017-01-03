@@ -17,14 +17,21 @@ public:
 	Street createStreetFromPoint(Point, int, int);
 	Street createStreetFromPoint(int, int, int, int);
 
+	Street createRandomStreet(sf::Vector2i, sf::Vector2i);
+
 	float calculateSlope(Point, Point);
 	int getPossibleXValue(Street);
 
+	int getRandomAngle();
+
+	int getPerpendicularAngle(int);
+	int getPerpendicularAngle(int, int);
 
 	Point getPointOnLine(Street);
 	Point getPointOnLine(Street, int);
 private:
 
+	int getUniformRandomInRange(int, int);
 	
 	
 	
