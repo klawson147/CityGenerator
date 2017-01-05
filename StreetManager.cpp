@@ -81,7 +81,7 @@ void StreetManager::setInitialStreet()
 {
 
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		growingStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 400, streetFactory.getRandomAngle()));
 	}
