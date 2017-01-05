@@ -1,5 +1,5 @@
 #include "Point.h"
-
+#define PI 3.14159265
 #pragma once
 class Street
 {
@@ -7,11 +7,11 @@ public:
 	Street();
 	~Street();
 
+	static Point getPointFromDistance(Point, float, int);
 
-
-	void setPointA(int, int);
-	void setPointB(int, int);
-	void setPointC(int, int);
+	void setPointA(float, float);
+	void setPointB(float, float);
+	void setPointC(float, float);
 
 	void setDistance(float); 
 	void setSlope(int);
@@ -27,15 +27,19 @@ public:
 
 	bool grow();
 
+	sf::Color* getColor();
+
 private:
 	Point pointA;
 	Point pointB;
 	Point pointC;
 
 	int angleDir;
-	
-	float distance; //distance of line
-	float distFromOrigin; //Distance from point of line origin
+	float distance_;
+
+	float calculateDistance(Point, Point);
+
+	sf::Color* color_;
 
 	int slope_;
 

@@ -9,6 +9,7 @@ StreetFactory::StreetFactory()
 
 StreetFactory::~StreetFactory()
 {
+
 }
 
 
@@ -26,7 +27,7 @@ float StreetFactory::calculateSlope(Point p1, Point p2)
 }
 
 // Return a Random X Value in the Range of a Street
-int StreetFactory::getPossibleXValue(Street s1)
+float StreetFactory::getPossibleXValue(Street s1)
 {
 	if (s1.getPointA().get_X() > s1.getPointB().get_X())
 	{
@@ -47,7 +48,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 
 	float slope = calculateSlope(p1, p2);
 
-	int newX = getPossibleXValue(s1);
+	float newX = getPossibleXValue(s1);
 	
 	float xVec = p1.get_X() - newX;
 
@@ -61,7 +62,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 }
 // Return a Point on the Street s1 at position x
 // no error checking
-Point StreetFactory::getPointOnLine(Street s1, int newX)
+Point StreetFactory::getPointOnLine(Street s1, float newX)
 {
 	Point p1 = s1.getPointA();
 	Point p2 = s1.getPointB();
@@ -80,18 +81,17 @@ Point StreetFactory::getPointOnLine(Street s1, int newX)
 }
 
 
-Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle)
+// args: initial point, distance, angle
+Street StreetFactory::createStreetFromPoint(Point pLine, float distance, float angle)
 {
 	angle *= -1; // 4th Quadrant Environment
 
-	int newx, newy; //X coord and Y coord for new end point
+	float newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
 	Street newStreet; //Street to be returned
 
-	newx = (pLine.get_X()) + (distance * cos(angle * PI / 180.0)); //Calculating new x coord
-	newy = (pLine.get_Y()) + (distance * sin(angle * PI / 180.0)); //Calculating new y coord
-	
-
+	newx = (pLine.get_X()) + (distance * (float)cos(angle * PI / 180.0)); //Calculating new x coord
+	newy = (pLine.get_Y()) + (distance * (float)sin(angle * PI / 180.0)); //Calculating new y coord
 
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
@@ -106,23 +106,20 @@ Street StreetFactory::createStreetFromPoint(Point pLine, int distance, int angle
 
 	return newStreet;
 }
-
-Street StreetFactory::createStreetFromPoint(int x, int y, int distance, int angle)
+// args: initial x, initial y, distance, angle
+Street StreetFactory::createStreetFromPoint(float x, float y, float distance, float angle)
 {
 	angle *= -1; // 4th Quadrant Environment
 
-	int newx, newy; //X coord and Y coord for new end point
+	float newx, newy; //X coord and Y coord for new end point
 	Point newPoint; //End point for new line
 	Street newStreet; //Street to be returned
 
 	newx = (x) + (distance * cos(angle * PI / 180.0)); //Calculating new x coord
 	newy = (y) + (distance * sin(angle * PI / 180.0)); //Calculating new y coord
 	
-
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
-
-	
 
 	newStreet.setPointA(x, y);
 	newStreet.setPointB(x, y);
@@ -135,7 +132,7 @@ Street StreetFactory::createStreetFromPoint(int x, int y, int distance, int angl
 }
 
 
-int StreetFactory::getRandomAngle()
+float StreetFactory::getRandomAngle()
 {	
 	return getUniformRandomInRange(0, 359);
 }
@@ -144,11 +141,11 @@ Street StreetFactory::createRandomStreet(sf::Vector2i lb, sf::Vector2i up)
 {
 	Street newStreet;
 	
-	int x1 = rand() % (up.x - lb.x) + (lb.x);
-	int y1 = rand() % (up.y - lb.y) + (lb.y);
+	float x1 = rand() % (up.x - lb.x) + (lb.x);
+	float y1 = rand() % (up.y - lb.y) + (lb.y);
 
-	int x2 = rand() % (up.x - lb.x) + (lb.x);
-	int y2 = rand() % (up.y - lb.y) + (lb.y);
+	float x2 = rand() % (up.x - lb.x) + (lb.x);
+	float y2 = rand() % (up.y - lb.y) + (lb.y);
 
 	newStreet.setPointA(x1, y1);
 	newStreet.setPointB(x2, y2);
@@ -158,7 +155,7 @@ Street StreetFactory::createRandomStreet(sf::Vector2i lb, sf::Vector2i up)
 }
 
 // Get a random perpendicular angle
-int StreetFactory::getPerpendicularAngle(int angle)
+float StreetFactory::getPerpendicularAngle(float angle)
 {
 	int result = getUniformRandomInRange(0, 1);
 
@@ -188,7 +185,7 @@ int StreetFactory::getPerpendicularAngle(int angle)
 // Get a perpendicular angle
 //  1  positive
 // -1  negative
-int StreetFactory::getPerpendicularAngle(int angle, int direction)
+float StreetFactory::getPerpendicularAngle(float angle, float direction)
 {
 	int perp = (90 * direction);
 
@@ -210,7 +207,7 @@ int StreetFactory::getPerpendicularAngle(int angle, int direction)
 
 // Return a random number in range of lower - upper
 // Uniform Probability
-int StreetFactory::getUniformRandomInRange(int lower, int upper)
+float StreetFactory::getUniformRandomInRange(float lower, float upper)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
