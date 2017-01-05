@@ -14,24 +14,25 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-	Street createStreetFromPoint(Point, int, int);
-	Street createStreetFromPoint(int, int, int, int);
+
+	Street createStreetFromPoint(Point, float, float);
+	Street createStreetFromPoint(float, float, float, float);
 
 	Street createRandomStreet(sf::Vector2i, sf::Vector2i);
 
 	float calculateSlope(Point, Point);
-	int getPossibleXValue(Street);
+	float getPossibleXValue(Street);
 
-	int getRandomAngle();
+	float getRandomAngle();
 
-	int getPerpendicularAngle(int);
-	int getPerpendicularAngle(int, int);
+	float getPerpendicularAngle(float);
+	float getPerpendicularAngle(float, float);
 
 	Point getPointOnLine(Street);
-	Point getPointOnLine(Street, int);
+	Point getPointOnLine(Street, float);
 private:
 
-	int getUniformRandomInRange(int, int);
+	float getUniformRandomInRange(float, float);
 	
 	
 	

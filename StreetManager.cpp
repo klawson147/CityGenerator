@@ -20,6 +20,8 @@ void StreetManager::drawStreets()
 	{
 		va.append(i->getVertexA());
 		va.append(i->getVertexB());
+		va[0].color = *i->getColor();
+		va[1].color = *i->getColor();
 		rw_->draw(va);
 		va.clear();
 	}
@@ -28,6 +30,8 @@ void StreetManager::drawStreets()
 	{
 		va.append(i->getVertexA());
 		va.append(i->getVertexB());
+		va[0].color = *i->getColor();
+		va[1].color = *i->getColor();
 		rw_->draw(va);
 		va.clear();
 	}
@@ -80,17 +84,14 @@ bool StreetManager::get_line_intersection(float p0_x, float p0_y, float p1_x, fl
 void StreetManager::setInitialStreet()
 {
 
-
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 1; i++)
 	{
-		growingStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 400, streetFactory.getRandomAngle()));
+		growingStreets_.push_back(streetFactory.createStreetFromPoint(startingPoint_, 1200, streetFactory.getRandomAngle()));
 	}
 	
 	
 
 }
-
-
 
 void StreetManager::timeStep()
 {
