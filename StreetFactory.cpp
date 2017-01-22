@@ -1,18 +1,12 @@
 #include "StreetFactory.h"
 
-
 StreetFactory::StreetFactory()
 {
-
 }
-
 
 StreetFactory::~StreetFactory()
 {
-
 }
-
-
 
 // Return The Slope from 2 Points
 float StreetFactory::calculateSlope(Point p1, Point p2)
@@ -22,7 +16,7 @@ float StreetFactory::calculateSlope(Point p1, Point p2)
 	float deltaX = (float)p2.get_X() - (float)p1.get_X();
 
 	m = deltaY / deltaX;
-	
+
 	return m;
 }
 
@@ -49,7 +43,7 @@ Point StreetFactory::getPointOnLine(Street s1)
 	float slope = calculateSlope(p1, p2);
 
 	float newX = getPossibleXValue(s1);
-	
+
 	float xVec = p1.get_X() - newX;
 
 	slope *= xVec;
@@ -80,7 +74,6 @@ Point StreetFactory::getPointOnLine(Street s1, float newX)
 	return p3;
 }
 
-
 // args: initial point, distance, angle
 Street StreetFactory::createStreetFromPoint(Point pLine, float distance, float angle)
 {
@@ -95,7 +88,7 @@ Street StreetFactory::createStreetFromPoint(Point pLine, float distance, float a
 
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
-	
+
 	newStreet.setPointA(pLine.get_X(), pLine.get_Y());
 	newStreet.setPointB(pLine.get_X(), pLine.get_Y());
 	newStreet.setPointC(newPoint.get_X(), newPoint.get_Y()); //Setting point C of street
@@ -115,9 +108,9 @@ Street StreetFactory::createStreetFromPoint(float x, float y, float distance, fl
 	Point newPoint; //End point for new line
 	Street newStreet; //Street to be returned
 
-	newx = (x) + (distance * cos(angle * PI / 180.0)); //Calculating new x coord
-	newy = (y) + (distance * sin(angle * PI / 180.0)); //Calculating new y coord
-	
+	newx = (x)+(distance * cos(angle * PI / 180.0)); //Calculating new x coord
+	newy = (y)+(distance * sin(angle * PI / 180.0)); //Calculating new y coord
+
 	newPoint.set_X(newx); //Setting new end point x coord
 	newPoint.set_Y(newy); //Setting new end point y coord
 
@@ -131,16 +124,17 @@ Street StreetFactory::createStreetFromPoint(float x, float y, float distance, fl
 	return newStreet;
 }
 
-
 float StreetFactory::getRandomAngle()
-{	
-	return getUniformRandomInRange(0, 359);
+{
+	float result = getUniformRandomInRange(0, 359);
+	//std::cout << result << std::endl;
+	return result;
 }
 
 Street StreetFactory::createRandomStreet(sf::Vector2i lb, sf::Vector2i up)
 {
 	Street newStreet;
-	
+
 	float x1 = rand() % (up.x - lb.x) + (lb.x);
 	float y1 = rand() % (up.y - lb.y) + (lb.y);
 
@@ -158,7 +152,7 @@ Street StreetFactory::createRandomStreet(sf::Vector2i lb, sf::Vector2i up)
 float StreetFactory::getPerpendicularAngle(float angle)
 {
 	int result = getUniformRandomInRange(0, 1);
-
+	angle *= -1;
 	if (result == 1)
 	{
 		angle += 90;
@@ -214,4 +208,15 @@ float StreetFactory::getUniformRandomInRange(float lower, float upper)
 	std::uniform_int_distribution<> dis(lower, upper);
 
 	return dis(gen);
+}
+
+Street StreetFactory::createStreetDivision(Street original)
+{
+	Street newStreet = createStreetFromPoint(original.getPointB(), original.calculateDistanceAC(), getRandomAngle()/*getPerpendicularAngle(original.getAngle())*/);
+	return newStreet;
+}
+
+bool StreetFactory::pointIntersects(Point A, Point B, Point C)
+{
+	return true;
 }

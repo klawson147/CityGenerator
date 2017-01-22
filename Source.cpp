@@ -19,14 +19,13 @@ int main()
 	sf::ContextSettings cs;
 	cs.antialiasingLevel = 8;
 
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!", sf::Style::Fullscreen, cs);
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, cs);
 	window.setFramerateLimit(60);
 
 	StreetManager streetManager(&window);
-	
-	streetManager.setStartingPoint(sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2));
+
+	streetManager.setStartingPoint(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
 	streetManager.setInitialStreet();
-	
 
 	sf::Clock clock;
 	sf::Clock permClock;
@@ -63,7 +62,7 @@ int main()
 				}
 			}
 
-			next_game_tick += 16.666;
+			next_game_tick += (unsigned long)16.666;
 			loops++;
 		}
 		// Draw Simulation

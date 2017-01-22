@@ -1,17 +1,15 @@
 #include "Point.h"
 
-
 Point::Point()
 {
 }
 
-
-Point::Point(sf::Vector2f pos)
+Point::Point(sf::Vector2i pos)
 {
 	position = pos;
 }
 
-Point::Point(float x, float y)
+Point::Point(int x, int y)
 {
 	position.x = x;
 	position.y = y;
@@ -21,28 +19,27 @@ Point::~Point()
 {
 }
 
-sf::Vector2f Point::getPosition()
+sf::Vector2i Point::getPosition()
 {
 	return position;
 }
 
-float Point::get_X()
+int Point::get_X()
 {
 	return position.x;
 }
 
-float Point::get_Y()
+int Point::get_Y()
 {
 	return position.y;
 }
 
-void Point::set_X(float p)
+void Point::set_X(int p)
 {
 	position.x = p;
 }
 
-void Point::set_Y(float p)
+void Point::set_Y(int p)
 {
 	position.y = p;
 }
-

@@ -3,6 +3,7 @@
 #include <random>
 #include "Street.h"
 #include "Directions.h"
+#include <iostream>
 #include "Point.h"
 #pragma once
 
@@ -14,11 +15,12 @@ public:
 	StreetFactory();
 	~StreetFactory();
 
-
 	Street createStreetFromPoint(Point, float, float);
 	Street createStreetFromPoint(float, float, float, float);
 
 	Street createRandomStreet(sf::Vector2i, sf::Vector2i);
+
+	Street createStreetDivision(Street);
 
 	float calculateSlope(Point, Point);
 	float getPossibleXValue(Street);
@@ -30,11 +32,9 @@ public:
 
 	Point getPointOnLine(Street);
 	Point getPointOnLine(Street, float);
-private:
 
 	float getUniformRandomInRange(float, float);
-	
-	
-	
-};
 
+	bool pointIntersects(Point, Point, Point);
+private:
+};

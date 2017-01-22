@@ -1,9 +1,14 @@
 #include "Street.h"
 
+int Street::instances = 0;
+
+// param 1\ initial point
+// param 2\ distance
+// param 3\ angle
 Point Street::getPointFromDistance(Point initialPoint, float distance, int angle)
 {
 	Point newPoint; //End point for new line
-	
+
 	newPoint.set_X((initialPoint.get_X()) + (distance * (float)cos(angle * PI / 180.0))); //Calculating new x coord
 	newPoint.set_Y((initialPoint.get_Y()) + (distance * (float)sin(angle * PI / 180.0))); //Calculating new y coord
 
@@ -12,13 +17,14 @@ Point Street::getPointFromDistance(Point initialPoint, float distance, int angle
 
 Street::Street()
 {
+	std::cout << "New Street [" << Street::instances << "]\n";
+	numbDivisions_ = 0;
+	maxDistanceBetweenDivisions = 25;
 }
-
 
 Street::~Street()
 {
 }
-
 
 void Street::setPointA(float x, float y)
 {
@@ -37,7 +43,6 @@ void Street::setPointC(float x, float y)
 	pointC.set_X(x);
 	pointC.set_Y(y);
 }
-
 
 sf::Vertex Street::getVertexA()
 {
@@ -78,23 +83,21 @@ Point Street::getPointC()
 	return pointC;
 }
 
-void Street::setDistance(float dis) 
+void Street::setDistance(float dis)
 {
 	distance_ = dis;
-
-	color_ = new sf::Color(angleDir + (angleDir), angleDir + (angleDir * 2), angleDir + (angleDir * 3), 125);
 }
 
 void Street::setAngleDirection(int d)
 {
-	angleDir = d;
+	angleDir_ = d;
 }
 
 // Returns true if street still growing
 // Returns false if street done growing
 bool Street::grow()
 {
-	float distance = calculateDistance(pointB, pointC);
+	int distance = calculateDistance(pointB, pointC);
 
 	if (distance <= 2)
 	{
@@ -103,14 +106,11 @@ bool Street::grow()
 	}
 	else if (distance != 0)
 	{
-		pointB = getPointFromDistance(pointB, 1, angleDir);
+		pointB = getPointFromDistance(pointB, 1, angleDir_);
 		return true;
 	}
 
-
 	return false;
-
-	
 }
 
 void Street::setSlope(int s)
@@ -118,8 +118,7 @@ void Street::setSlope(int s)
 	slope_ = s;
 }
 
-
-float Street::calculateDistance(Point p1, Point p2)
+int Street::calculateDistance(Point p1, Point p2)
 {
 	float distance;
 
@@ -135,7 +134,48 @@ float Street::calculateDistance(Point p1, Point p2)
 	return distance;
 }
 
-sf::Color* Street::getColor()
+float Street::calculateDistanceAB()
 {
-	return color_;
+	return calculateDistance(pointA, pointB);
+}
+
+float Street::calculateDistanceAC()
+{
+	return calculateDistance(pointA, pointC);
+}
+
+float Street::calculateDistanceBC()
+{
+	return calculateDistance(pointB, pointC);
+}
+
+void Street::setMaxDivisions(int n)
+{
+	numbDivisionsMAX_ = n;
+}
+
+int Street::getNumbDivisions()
+{
+	return numbDivisions_;
+}
+
+int Street::getAngle()
+{
+	return angleDir_;
+}
+
+void Street::incrementDivisions()
+{
+	numbDivisions_++;
+}
+
+// Returns True if Street contains Child ID
+bool Street::containsChild(int id)
+{
+	for (size_t i = 0; i < childID.size(); i++)
+	{
+		if (childID[i] == id)
+			return true;
+	}
+	return false;
 }
