@@ -6,18 +6,18 @@ class Point
 {
 public:
 	Point();
-	Point(sf::Vector2i);
-	Point(int, int);
+	Point(sf::Vector2f);
+	Point(float, float);
 	~Point();
 
-	int get_X();
-	int get_Y();
+	float get_X();
+	float get_Y();
 
-	void set_X(int);
-	void set_Y(int);
+	void set_X(float);
+	void set_Y(float);
 
-	sf::Vector2i getPosition();
+	sf::Vector2f getPosition();
 
 private:
-	sf::Vector2i position;
+	sf::Vector2f position;
 };

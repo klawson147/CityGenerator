@@ -4,12 +4,12 @@ Point::Point()
 {
 }
 
-Point::Point(sf::Vector2i pos)
+Point::Point(sf::Vector2f pos)
 {
 	position = pos;
 }
 
-Point::Point(int x, int y)
+Point::Point(float x, float y)
 {
 	position.x = x;
 	position.y = y;
@@ -19,27 +19,27 @@ Point::~Point()
 {
 }
 
-sf::Vector2i Point::getPosition()
+sf::Vector2f Point::getPosition()
 {
 	return position;
 }
 
-int Point::get_X()
+float Point::get_X()
 {
 	return position.x;
 }
 
-int Point::get_Y()
+float Point::get_Y()
 {
 	return position.y;
 }
 
-void Point::set_X(int p)
+void Point::set_X(float p)
 {
 	position.x = p;
 }
 
-void Point::set_Y(int p)
+void Point::set_Y(float p)
 {
 	position.y = p;
 }

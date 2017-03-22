@@ -2,24 +2,38 @@
 
 int Street::instances = 0;
 
-// param 1\ initial point
-// param 2\ distance
-// param 3\ angle
+
 Point Street::getPointFromDistance(Point initialPoint, float distance, int angle)
 {
-	Point newPoint; //End point for new line
-
+	Point newPoint;
 	newPoint.set_X((initialPoint.get_X()) + (distance * (float)cos(angle * PI / 180.0))); //Calculating new x coord
 	newPoint.set_Y((initialPoint.get_Y()) + (distance * (float)sin(angle * PI / 180.0))); //Calculating new y coord
+	/*
+	float dX = (pointC.get_X() - pointB.get_X());
+	float dY = (pointC.get_Y() - pointB.get_Y());
 
+	float distanceCoeff = (1/ calculateDistanceAC());
+
+	
+	float newx = (pointB.get_X() + (distanceCoeff*dX));
+	float newy = (pointB.get_Y() + (distanceCoeff*dY));
+
+	newPoint.set_X(newx);
+	newPoint.set_Y(newy);
+	*/
 	return newPoint;
 }
 
 Street::Street()
 {
-	std::cout << "New Street [" << Street::instances << "]\n";
-	numbDivisions_ = 0;
+	//std::cout << "New Street [" << Street::instances << "]\n";
+	//numbDivisions_ = 0;
 	maxDistanceBetweenDivisions = 25;
+	color = sf::Color::White;
+	parent = NULL;
+	shouldDivide = true;
+	shouldDivideEnd = true;
+	isMaster = false;
 }
 
 Street::~Street()
@@ -47,6 +61,7 @@ void Street::setPointC(float x, float y)
 sf::Vertex Street::getVertexA()
 {
 	sf::Vertex v;
+	v.color = color;
 	v.position.x = pointA.get_X();
 	v.position.y = pointA.get_Y();
 	return v;
@@ -55,6 +70,7 @@ sf::Vertex Street::getVertexA()
 sf::Vertex Street::getVertexB()
 {
 	sf::Vertex v;
+	v.color = color;
 	v.position.x = pointB.get_X();
 	v.position.y = pointB.get_Y();
 	return v;
@@ -63,6 +79,7 @@ sf::Vertex Street::getVertexB()
 sf::Vertex Street::getVertexC()
 {
 	sf::Vertex v;
+	v.color = color;
 	v.position.x = pointC.get_X();
 	v.position.y = pointC.get_Y();
 	return v;
@@ -82,12 +99,12 @@ Point Street::getPointC()
 {
 	return pointC;
 }
-
+/*
 void Street::setDistance(float dis)
 {
 	distance_ = dis;
 }
-
+*/
 void Street::setAngleDirection(int d)
 {
 	angleDir_ = d;
@@ -99,24 +116,21 @@ bool Street::grow()
 {
 	int distance = calculateDistance(pointB, pointC);
 
-	if (distance <= 2)
+	if (distance <= 4)
 	{
 		pointB = pointC;
 		return false;
 	}
 	else if (distance != 0)
 	{
-		pointB = getPointFromDistance(pointB, 1, angleDir_);
+		pointB = getPointFromDistance(pointB, 1 , angleDir_);
 		return true;
 	}
 
 	return false;
 }
 
-void Street::setSlope(int s)
-{
-	slope_ = s;
-}
+
 
 int Street::calculateDistance(Point p1, Point p2)
 {
@@ -133,22 +147,23 @@ int Street::calculateDistance(Point p1, Point p2)
 
 	return distance;
 }
-
+/*
 float Street::calculateDistanceAB()
 {
 	return calculateDistance(pointA, pointB);
 }
-
+*/
 float Street::calculateDistanceAC()
 {
 	return calculateDistance(pointA, pointC);
 }
 
+
 float Street::calculateDistanceBC()
 {
 	return calculateDistance(pointB, pointC);
 }
-
+/*
 void Street::setMaxDivisions(int n)
 {
 	numbDivisionsMAX_ = n;
@@ -159,16 +174,17 @@ int Street::getNumbDivisions()
 	return numbDivisions_;
 }
 
-int Street::getAngle()
-{
-	return angleDir_;
-}
+
 
 void Street::incrementDivisions()
 {
 	numbDivisions_++;
 }
-
+*/
+int Street::getAngle()
+{
+	return angleDir_;
+}
 // Returns True if Street contains Child ID
 bool Street::containsChild(int id)
 {
@@ -178,4 +194,9 @@ bool Street::containsChild(int id)
 			return true;
 	}
 	return false;
+}
+
+void Street::setColor(sf::Color c)
+{
+	color = c;
 }

@@ -9,17 +9,22 @@ public:
 	~Street();
 
 	static int instances;
-	int streetID;
-	int parentID;
 
-	static Point getPointFromDistance(Point, float, int);
+	__int16 streetID;
+	__int16 parentID;
+
+	Street* parent;
+
+	void setColor(sf::Color);
+
+	Point Street::getPointFromDistance(Point initialPoint, float distance, int angle);
 
 	void setPointA(float, float);
 	void setPointB(float, float);
 	void setPointC(float, float);
 
 	void setDistance(float);
-	void setSlope(int);
+	
 	void setAngleDirection(int);
 
 	int getAngle();
@@ -34,9 +39,13 @@ public:
 
 	bool grow();
 
+	bool isMaster;
+	bool shouldDivide;
+	bool shouldDivideEnd;
+
 	void incrementDivisions();
 
-	float calculateDistanceAB();
+	//float calculateDistanceAB();
 	float calculateDistanceAC();
 	float calculateDistanceBC();
 
@@ -46,17 +55,16 @@ public:
 	int maxDistanceBetweenDivisions;
 
 	bool containsChild(int);
-	std::vector<int> childID;
+	std::vector<__int16> childID;
 private:
 	Point pointA;
 	Point pointB;
 	Point pointC;
 
-	int angleDir_;
-	float distance_;
-	int slope_;
-	int numbDivisions_;
-	int numbDivisionsMAX_;
-
+	__int16 angleDir_;
+	//__int8 distance_;
+	//__int8 numbDivisions_;
+	
+	sf::Color color;
 	int calculateDistance(Point, Point);
 };
